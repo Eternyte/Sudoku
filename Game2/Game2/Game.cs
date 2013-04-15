@@ -1,6 +1,6 @@
 // File: Game.cs
 // 
-// connect3.cs
+// game.cs
 // Description: Performs the main game logic loop with helper functions.
 //
 // Version: $Id$
