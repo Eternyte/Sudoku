@@ -21,3 +21,4 @@ TO DO
 - [ ] Proper documentation for some parts of the code.
 - [ ] An additional color to signify original digits.
 - [ ] Show possible digits for each cell.
+- [ ] Actual difficulty logic when removing tiles.
