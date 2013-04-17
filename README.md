@@ -1,4 +1,4 @@
-# Sudoku Game in C# and XNA
+# Sudoku
 Sudoku is a game played on a 9 x 9 grid, such that the player aims to fill each column, row, 
 and 3 x 3 sub-grids with digits 1 through 9, in a manner which will allow every digit to be 
 represented once. The game normally starts with a partially completed grid and the game is 
@@ -16,6 +16,10 @@ Run an instance of the game with Start Debugging (F5).
 TO DO
 ###### Keyboard
 TO DO
+
+### Tools
+**Programmed in C# and XNA**  
+**Artwork created in Inkscape and GIMP**
 
 ### To be Implemented
 - [ ] Proper documentation for some parts of the code.
