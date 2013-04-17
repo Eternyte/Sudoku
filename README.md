@@ -4,7 +4,7 @@ and 3 x 3 sub-grids with digits 1 through 9, in a manner which will allow every 
 represented once. The game normally starts with a partially completed grid and the game is 
 completed when every cell in the 9 by 9 grid is filled.
 
-![Sudoku Game](https://raw.github.com/Eternyte/Snapshots/10.JPG)
+![Sudoku Game](https://raw.github.com/Eternyte/Sudoku/Snapshots/10.JPG)
 -----------------------
 ### How to Run with Visual Studios
 Click **ZIP** between **Clone in Windows** and **HTTP**.  
