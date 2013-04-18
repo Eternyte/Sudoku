@@ -10,6 +10,14 @@ through mouse or keyboard commands. Some addition features include eliminating p
 from each cell and displaying conflicting digits.
 
 ![Sudoku Game](https://raw.github.com/Eternyte/Sudoku/master/Snapshots/10.JPG)
+
+### Background
+I am currently studying at Rochester Institute of Technology (RIT). And while the courses I have
+taken have allowed me to learn Python, Java, and C++, I was not taught C#. However, this is
+one of the first languages which the Game Design and Development (GDD) majors at RIT learn.
+Therefore, over the course of my one week Winter Break, I decided to learn C# on my own time with 
+the help of Whitaker's XNA tutorial and of my GDD friends. This was the result.
+
 -----------------------
 ### How to Run with Visual Studios
 Click **ZIP** between **Clone in Windows** and **HTTP**.  
@@ -30,13 +38,7 @@ To select a value for the cell, enter a digit.
 To eliminate a value for the cell, hold N and enter a digit.  
 To un-eliminate a value for the cell, hold M and enter a digit.
 
-### Background
-I am currently studying at Rochester Institute of Technology (RIT). And while the courses I have
-taken have allowed me to learn Python, Java, and C++, I was not taught C#. However, this is
-one of the first languages which the Game Design and Development (GDD) majors at RIT learn.
-Therefore, over the course of my one week Winter Break, I decided to learn C# on my own time with 
-the help of Whitaker's XNA tutorial and of my GDD friends. This was the result.
-
+-----------------------
 ### Tools
 **Programmed in C# and XNA**  
 **Artwork created in Inkscape and GIMP**
