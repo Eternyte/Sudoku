@@ -280,24 +280,29 @@ namespace Sudoku {
                 Keys[] pressedKeys = keyState.GetPressedKeys();
                 Keys[] numPadKeys = new Keys[] {Keys.NumPad1, Keys.NumPad2, Keys.NumPad3, Keys.NumPad4,
                                                 Keys.NumPad5, Keys.NumPad6, Keys.NumPad7, Keys.NumPad8, 
-                                                Keys.NumPad9, Keys.D1, Keys.D2, Keys.D3, Keys.D4,
-                                                Keys.D5, Keys.D6, Keys.D7, Keys.D8, Keys.D9};
+                                                Keys.NumPad9, Keys.NumPad0, Keys.D1, Keys.D2, Keys.D3, Keys.D4,
+                                                Keys.D5, Keys.D6, Keys.D7, Keys.D8, Keys.D9, Keys.D0};
 
                 for (int keyIndex = 0; keyIndex < pressedKeys.Length; ++keyIndex) {
                     if (keyState.IsKeyDown(pressedKeys[keyIndex]) && oldKeyState.IsKeyUp(pressedKeys[keyIndex])
                         && numPadKeys.Contains(pressedKeys[keyIndex])) {
-                        int value = (Array.IndexOf(numPadKeys, pressedKeys[keyIndex]) % 9) + 1;
+                        int value = (Array.IndexOf(numPadKeys, pressedKeys[keyIndex]) % 10) + 1;
 
                         // Remove value from crossout.
-                        if (pressedKeys.Contains(Keys.Space) && crossout[selectedTile].Contains(value)) {
-                            crossout[selectedTile].Remove(value);
-                        // Add value to crossout.
-                        } else if (pressedKeys.Contains(Keys.Space) && crossout[selectedTile].Contains(value) == false) {
-                            crossout[selectedTile].Add(value);
+                        if (pressedKeys.Contains(Keys.Space) && value != 10) {
+                            // Remove value from crossout.
+                            if (crossout[selectedTile].Contains(value)) {
+                                crossout[selectedTile].Remove(value);
+                            // Add value to crossout.
+                            } else {
+                                crossout[selectedTile].Add(value);
+                            }
+                            hasMoved = true;
                         // Change selected tile to value pressed.
-                        } else if (crossout[selectedTile].Contains(value) == false
+                        } else if ((value == 10 || crossout[selectedTile].Contains(value) == false)
                             && curBoard.Original[selectedTile.X, selectedTile.Y] == 0) {
-                            curBoard[selectedTile.X, selectedTile.Y] = value;
+                            curBoard[selectedTile.X, selectedTile.Y] = value % 10;
+                            hasMoved = true;
                         }
                     }
                 }
@@ -380,12 +385,15 @@ namespace Sudoku {
                 reset.IsOn = true;
                 for (int i = 0; i < SIZE; ++i) {
                     for (int j = 0; j < SIZE; ++j) {
+                        // Reset the current board to the original board.
                         if (curBoard.Original[i, j] == 0) {
                             curBoard[i, j] = 0;
                         }
+                        // Reset the dictionary to empty strings.
+                        crossout[new Point(i, j)] = new List<int>();
                     }
                 }
-                crossout.Clear();
+                
             } else if (reset.Destination.Contains(new Point(oldState.X, oldState.Y)) == false) {
                 reset.IsOn = false;
             }
@@ -447,7 +455,7 @@ namespace Sudoku {
                         if (value == 0) {
                             Rectangle rect = new Rectangle(0, 0, blank.Width, blank.Height);
                             expand(blank, dest[i, j], rect, 1);
-                            if (crossout[new Point(i, j)].Count > 0) {
+                            if (crossout.ContainsKey(new Point(i, j)) && crossout[new Point(i, j)].Count > 0) {
                                 for (int num = 1; num <= SIZE; ++num) {
                                     if (crossout[new Point(i, j)].Contains(num) == false) {
                                         spriteBatch.End();
