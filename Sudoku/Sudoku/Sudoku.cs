@@ -289,10 +289,10 @@ namespace Sudoku {
                         int value = (Array.IndexOf(numPadKeys, pressedKeys[keyIndex]) % 9) + 1;
 
                         // Remove value from crossout.
-                        if (pressedKeys.Contains(Keys.N) && crossout[selectedTile].Contains(value)) {
+                        if (pressedKeys.Contains(Keys.Space) && crossout[selectedTile].Contains(value)) {
                             crossout[selectedTile].Remove(value);
                         // Add value to crossout.
-                        } else if (pressedKeys.Contains(Keys.N) && crossout[selectedTile].Contains(value) == false) {
+                        } else if (pressedKeys.Contains(Keys.Space) && crossout[selectedTile].Contains(value) == false) {
                             crossout[selectedTile].Add(value);
                         // Change selected tile to value pressed.
                         } else if (crossout[selectedTile].Contains(value) == false
@@ -366,6 +366,9 @@ namespace Sudoku {
                 clear.IsOn = true;
                 if (selectedTile != new Point(-1, -1)) {
                     curBoard[selectedTile.X, selectedTile.Y] = 0;
+                    if (crossout[new Point(selectedTile.X, selectedTile.Y)].Count > 0) {
+                        crossout[new Point(selectedTile.X, selectedTile.Y)].Clear();
+                    }
                 }
             } else if (clear.Destination.Contains(new Point(oldState.X, oldState.Y)) == false) {
                 clear.IsOn = false;
@@ -382,6 +385,7 @@ namespace Sudoku {
                         }
                     }
                 }
+                crossout.Clear();
             } else if (reset.Destination.Contains(new Point(oldState.X, oldState.Y)) == false) {
                 reset.IsOn = false;
             }
@@ -442,10 +446,22 @@ namespace Sudoku {
                     if (size == 9 && selectedTile.X == i && selectedTile.Y == j) {
                         if (value == 0) {
                             Rectangle rect = new Rectangle(0, 0, blank.Width, blank.Height);
-                            expand(blank, dest[i, j], rect);
+                            expand(blank, dest[i, j], rect, 1);
+                            if (crossout[new Point(i, j)].Count > 0) {
+                                for (int num = 1; num <= SIZE; ++num) {
+                                    if (crossout[new Point(i, j)].Contains(num) == false) {
+                                        spriteBatch.End();
+                                        spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
+                                        rect = tileArray[3, num - 1];
+                                        expand(tileMap, dest[i, j], rect, 0);
+                                        spriteBatch.End();
+                                        spriteBatch.Begin();
+                                    }
+                                }
+                            }
                         } else {
                             Rectangle rect = tileArray[0, value - 1];
-                            expand(tileMap, dest[i, j], rect);
+                            expand(tileMap, dest[i, j], rect, 1);
                         }
                     // If drawing an offending tile, draw the tile with red.
                     } else if (size == 9 && value != 0 && curBoard.Offending.Contains(new Tuple<int, int>(i, j))) {
@@ -480,12 +496,12 @@ namespace Sudoku {
             }
         }
 
-        private void expand(Texture2D image, Rectangle dest, Rectangle source) {
+        private void expand(Texture2D image, Rectangle dest, Rectangle source, int depth) {
             float scale = 1.15f;
             int xCoor = (int)(dest.X - (((scale - 1) / 2) * source.Width));
             int yCoor = (int)(dest.Y - (((scale - 1) / 2) * source.Height));
             spriteBatch.Draw(image, new Vector2(xCoor, yCoor), source, Color.White, 
-                0f, Vector2.Zero, scale, SpriteEffects.None, 0);
+                0f, Vector2.Zero, scale, SpriteEffects.None, depth);
         }
     }
 }
