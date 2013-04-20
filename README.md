@@ -9,7 +9,7 @@ Therefore, each game is assured to have a valid solution. The player is able to 
 through mouse or keyboard commands. Some addition features include eliminating possible values
 from each cell and displaying conflicting digits.
 
-![Sudoku Game](https://raw.github.com/Eternyte/Sudoku/master/Snapshots/10.JPG)
+![Sudoku Game](https://raw.github.com/Eternyte/Sudoku/master/Snapshots/11.PNG)
 
 ### Background
 I am currently studying at Rochester Institute of Technology (RIT). And while the courses I have
