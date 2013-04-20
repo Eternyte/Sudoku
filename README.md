@@ -45,10 +45,10 @@ To un-eliminate a value for the cell, hold M and enter a digit.
 
 ### To be Implemented
 - [ ] Proper documentation for some parts of the code.
-- [ ] An additional color to signify original digits.
-- [ ] Show possible digits for each cell.
+- [X] An additional color to signify original digits.
+- [X] Show possible digits for each cell.
 - [ ] Actual difficulty logic when removing tiles.
-- [ ] Clicking outside the grids deselects.
+- [X] Clicking outside the grids deselects.
 - [ ] Remove the deselect button.
-- [ ] Merge keyboard elimination keys.
+- [X] Merge keyboard elimination keys.
 - [ ] Implement some form of initial selection for keyboard.
