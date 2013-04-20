@@ -22,7 +22,13 @@ the help of Whitaker's XNA tutorial and of my GDD friends. This was the result.
 ### How to Run with Visual Studios
 Click **ZIP** between **Clone in Windows** and **HTTP**.  
 Then unzip the file and run Game.sln on Visual Studios.  
-Run an instance of the game with **Start Debugging (F5)**.  
+Run an instance of the game with **Start Debugging (F5)**. 
+
+### How to Run Without
+Click **ZIP** between **Clone in Windows** and **HTTP**.  
+Then unzip the file and run Published > Sudoku.app on Visual Studios.  
+Note that you will have to uninstall it after if you do this method.  
+To uninstall, go to **Uninstall or Change a Program** and uninstall **Sudoku**.  
 
 ### Controls
 ###### Mouse
