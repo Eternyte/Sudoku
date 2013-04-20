@@ -51,13 +51,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Tiles.png">
-      <Name>Tiles</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Buttons\QuitOff.png">
       <Name>QuitOff</Name>
       <Importer>TextureImporter</Importer>
@@ -81,6 +74,13 @@
   <ItemGroup>
     <Compile Include="Buttons\QuitOn.png">
       <Name>QuitOn</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Tiles.png">
+      <Name>Tiles</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
