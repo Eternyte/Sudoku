@@ -1,8 +1,8 @@
 Content\Wood.xnb
 Content\Cell.xnb
 Content\Blank.xnb
-Content\Tiles.xnb
 Content\Buttons\QuitOff.xnb
-Content\Buttons\DeselectOff.xnb
-Content\Buttons\DeselectOn.xnb
 Content\Buttons\QuitOn.xnb
+Content\Buttons\ResetOff.xnb
+Content\Buttons\ResetOn.xnb
+Content\Tiles.xnb

@@ -39,10 +39,10 @@ namespace Sudoku {
         private Texture2D blank;
         // A set of tiles; creme-colored with numbers. //
         private Texture2D tileMap;
-        // Deselect button when mouse is not there. //
-        private Texture2D deselectOff;
-        // Deselect button when mouse is there. //
-        private Texture2D deselectOn;
+        // Reset button when mouse is not there. //
+        private Texture2D resetOff;
+        // Reset button when mouse is there. //
+        private Texture2D resetOn;
         // Quit button when mouse is not there. //
         private Texture2D quitOff;
         // Quit button when mouse is there. //
@@ -59,8 +59,10 @@ namespace Sudoku {
         private Rectangle[,] cellBoardDest;
 
         // Buttons
-        // Deselect button to deselect selected tile. //
-        private Button deselect;
+        // Clear button to clear the selected tile. //
+        private Button clear;
+        // Reset button to reset the whole map. //
+        private Button reset;
         // Quit button to end the game. //
         private Button quit;
 
@@ -145,15 +147,17 @@ namespace Sudoku {
             setDestinations(cellBoardDest, cell, 15, 15, 0);
             blank = Content.Load<Texture2D>("Blank");
             tileMap = Content.Load<Texture2D>("Tiles");
-            tileArray = new TileArray(tileMap, 3, 9);
+            tileArray = new TileArray(tileMap, 4, 9);
             setDestinations(tileBoardDest, blank, 15, 15, 3);
             setDestinations(moveBoardDest, blank, 750, 350, 2);
 
             // Add buttons.
-            deselectOff = Content.Load<Texture2D>("Buttons/DeselectOff");
-            deselectOn = Content.Load<Texture2D>("Buttons/DeselectOn");
-            deselect = new Button("deselect", deselectOff, deselectOn, 
-                new Rectangle(750, 575, deselectOff.Width, deselectOff.Height));
+            clear = new Button("clear", blank, blank,
+                new Rectangle(750, 575, blank.Width, blank.Height));
+            resetOff = Content.Load<Texture2D>("Buttons/ResetOff");
+            resetOn = Content.Load<Texture2D>("Buttons/ResetOn");
+            reset = new Button("reset", resetOff, resetOn,
+             new Rectangle(820, 575, resetOff.Width, resetOff.Height));
             quitOff = Content.Load<Texture2D>("Buttons/QuitOff");
             quitOn = Content.Load<Texture2D>("Buttons/QuitOn");
             quit = new Button("quit", quitOff, quitOn, 
@@ -201,7 +205,8 @@ namespace Sudoku {
                 updateMouse();
                 getMove(keyState);
                 shiftCell(keyState);
-                callDeselect();
+                callClear();
+                callReset();
                 callQuit();
                 hasWon = curBoard.isSolved();
                 oldKeyState = keyState;
@@ -245,7 +250,8 @@ namespace Sudoku {
 
             // Implement clicking outside to deselect.
             if (lastClickedLeft != new Point(-1,-1) && tempSelectedTile == new Point(-1, -1)
-                && deselect.Destination.Contains(lastClickedLeft) == false
+                && clear.Destination.Contains(lastClickedLeft) == false
+                && reset.Destination.Contains(lastClickedLeft) == false
                 && quit.Destination.Contains(lastClickedLeft) == false) {
                 Boolean clickedMove = false;
                 for (int i = 0; i < moveBoardDest.GetLength(0); ++i) {
@@ -355,12 +361,29 @@ namespace Sudoku {
             }
         }
 
-        private void callDeselect() {
-            if (deselect.Destination.Contains(lastClickedLeft)) {
-                deselect.IsOn = true;
-                selectedTile = new Point(-1, -1);
-            } else if (deselect.Destination.Contains(new Point(oldState.X, oldState.Y)) == false) {
-                deselect.IsOn = false;
+        private void callClear() {
+            if (clear.Destination.Contains(lastClickedLeft)) {
+                clear.IsOn = true;
+                if (selectedTile != new Point(-1, -1)) {
+                    curBoard[selectedTile.X, selectedTile.Y] = 0;
+                }
+            } else if (clear.Destination.Contains(new Point(oldState.X, oldState.Y)) == false) {
+                clear.IsOn = false;
+            }
+        }
+
+        private void callReset() {
+            if (reset.Destination.Contains(lastClickedLeft)) {
+                reset.IsOn = true;
+                for (int i = 0; i < SIZE; ++i) {
+                    for (int j = 0; j < SIZE; ++j) {
+                        if (curBoard.Original[i, j] == 0) {
+                            curBoard[i, j] = 0;
+                        }
+                    }
+                }
+            } else if (reset.Destination.Contains(new Point(oldState.X, oldState.Y)) == false) {
+                reset.IsOn = false;
             }
         }
 
@@ -390,7 +413,8 @@ namespace Sudoku {
             drawFromArray(cell, cellBoardDest);
             drawTilesFromBoard(curBoard.Board, tileBoardDest);
             drawTilesFromBoard(moveBoard, moveBoardDest);
-            deselect.Draw(spriteBatch);
+            clear.Draw(spriteBatch);
+            reset.Draw(spriteBatch);
             quit.Draw(spriteBatch);
             spriteBatch.End();
 
@@ -432,21 +456,18 @@ namespace Sudoku {
                         Rectangle rect = tileArray[2, value - 1];
                         spriteBatch.Draw(tileMap, dest[i, j], rect, Color.White);
                     // If crossout has values on the tile, then draw a blank with the numbers.
-                        /*
-                    } else if (size == 9 && value == 0 
-                        && crossout.ContainsKey(new Point(i, j)) 
-                        && crossout[new Point(i, j)].Count > 0) {
-                        Rectangle rect = new Rectangle(0, 0, blank.Width, blank.Height);
-                        spriteBatch.Draw(blank, dest[i, j], rect, Color.White);
-                        Point tempPoint = new Point(i, j);
-                        String tempString = "";
-                        for (int crossed = 0; i < crossout[tempPoint].Count; ++i) {
-                            tempString += crossed.ToString() + " ";
+                    } else if (size == 9 && value == 0 && crossout.ContainsKey(new Point(i, j)) && crossout[new Point(i, j)].Count > 0) {
+                        spriteBatch.End();
+                        spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.Additive);
+                        for (int num = 1; num <= SIZE; ++num) {
+                            if (crossout[new Point(i, j)].Contains(num) == false) {
+                                Rectangle rect = tileArray[3, num - 1];
+                                spriteBatch.Draw(tileMap, dest[i, j], rect, Color.White);
+                            }
                         }
-                        Vector2 tempVector = new Vector2(dest[i, j].X, dest[i, j].Y);
-                        spriteBatch.DrawString(font, tempString, tempVector, Color.White);
-                         */
-                    // If drawing a crossout tile, draw the tile in black.
+                        spriteBatch.End();
+                        spriteBatch.Begin();
+                    // If drawing a crossout tile, draw the tile in dark grey.
                     } else if (size == 3 && crossout.ContainsKey(selectedTile) && crossout[selectedTile].Contains(value)) {
                         Rectangle rect = tileArray[0, value - 1];
                         spriteBatch.Draw(tileMap, dest[i, j], rect, Color.DimGray);
