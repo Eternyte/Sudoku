@@ -28,15 +28,14 @@ Run an instance of the game with **Start Debugging (F5)**.
 ###### Mouse
 To select a cell, click a cell on the 9 x 9 grid.  
 To select a value for the cell, click a digit on the 3 x 3 to the right.  
-To eliminate a value for the cell, right-click a digit on the 3 x 3 to theright.  
-To deselect, click the Deselect button.  
+To eliminate a value for the cell, right-click a digit on the 3 x 3 to the right.  
+To deselect, click outside of the buttons.  
 To quit the game, click the Quit button.
 
 ###### Keyboard
 To move to adjacent cells, use arrow keys.  
 To select a value for the cell, enter a digit.  
-To eliminate a value for the cell, hold N and enter a digit.  
-To un-eliminate a value for the cell, hold M and enter a digit.
+To eliminate a value for the cell, hold spacebar and enter a digit.
 
 -----------------------
 ### Tools
@@ -45,10 +44,5 @@ To un-eliminate a value for the cell, hold M and enter a digit.
 
 ### To be Implemented
 - [ ] Proper documentation for some parts of the code.
-- [X] An additional color to signify original digits.
-- [X] Show possible digits for each cell.
 - [ ] Actual difficulty logic when removing tiles.
-- [X] Clicking outside the grids deselects.
-- [ ] Remove the deselect button.
-- [X] Merge keyboard elimination keys.
 - [ ] Implement some form of initial selection for keyboard.
