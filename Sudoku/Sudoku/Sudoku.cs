@@ -344,21 +344,25 @@ namespace Sudoku {
                         case "Up":
                             if (selectedTile.X - 1 >= 0) {
                                 selectedTile = new Point(selectedTile.X - 1, selectedTile.Y);
+                                hasMoved = true;
                             }
                             break;
                         case "Down":
                             if (selectedTile.X + 1 < 9) {
                                 selectedTile = new Point(selectedTile.X + 1, selectedTile.Y);
+                                hasMoved = true;
                             }
                             break;
                         case "Left":
                             if (selectedTile.Y - 1 >= 0) {
                                 selectedTile = new Point(selectedTile.X, selectedTile.Y - 1);
+                                hasMoved = true;
                             }
                             break;
                         case "Right":
                             if (selectedTile.Y + 1 < 9) {
                                 selectedTile = new Point(selectedTile.X, selectedTile.Y + 1);
+                                hasMoved = true;
                             }
                             break;
                     }
